@@ -1,16 +1,15 @@
 ---
 name: douyin-content-capture
 description: >
-  Parses Douyin share links, downloads watermark-free video or image notes,
-  and transcribes speech locally via faster-whisper. Use when the user shares
-  a Douyin URL, v.douyin.com short link, asks to extract 文案/字幕/无水印下载,
-  or mentions 抖音分享链.
+  解析抖音分享链接，下载无水印视频或图文内容，并通过 faster-whisper
+  在本地完成语音转写。用户给出 Douyin URL、v.douyin.com 短链，
+  或明确要求提取文案、字幕、无水印下载、抖音分享链时使用。
 metadata:
   version: "1.0.0"
   compatibility: "Requires Python 3.10+, FFmpeg (video transcription), network. No login cookies."
 ---
 
-# Douyin Content Capture
+# 抖音内容抓取
 
 从抖音分享链接或整段分享文案，本地完成解析、无水印下载与文案提取（视频 Whisper 转写，图文直接取配文）。**无需登录 Cookie，无需云端语音 API。**
 

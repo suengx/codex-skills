@@ -1,14 +1,14 @@
 # douyin-capture
 
-Installable CLI for resolving Douyin share links, downloading clean media, and producing local transcript artifacts.
+可安装的命令行工具，用于解析抖音分享链接、下载无水印内容，并在本地产出文案和转写结果。
 
-## Install
+## 安装
 
 ```bash
 pip install ".[transcribe]"
 ```
 
-## Commands
+## 常用命令
 
 ```bash
 douyin-capture doctor --json

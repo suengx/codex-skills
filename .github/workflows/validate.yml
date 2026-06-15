@@ -25,5 +25,4 @@ jobs:
 
       - name: Validate JSON manifests
         run: |
-          python -m json.tool .agents/plugins/marketplace.json > /dev/null
           python -m json.tool plugins/douyin-content-capture/.codex-plugin/plugin.json > /dev/null

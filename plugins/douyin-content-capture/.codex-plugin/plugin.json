@@ -1,18 +1,18 @@
 {
   "name": "douyin-content-capture",
   "version": "1.0.0",
-  "description": "Cross-platform Douyin capture packaged for Codex.",
+  "description": "面向 Codex 的抖音内容抓取插件适配层。",
   "author": {
     "name": "suengx"
   },
   "skills": "./skills/",
   "interface": {
-    "displayName": "Douyin Content Capture",
-    "shortDescription": "Parse Douyin links and extract content locally.",
-    "longDescription": "Bundled Codex adapter for the installable douyin-capture CLI package.",
+    "displayName": "抖音内容抓取",
+    "shortDescription": "解析抖音链接并在本地提取内容。",
+    "longDescription": "这是 douyin-capture 可安装 CLI 的 Codex 插件适配层，支持本地下载、文案提取与视频转写。",
     "developerName": "suengx",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Use Douyin Content Capture to parse a Douyin share link, download clean media, and extract a transcript locally."
+    "defaultPrompt": "使用抖音内容抓取插件解析抖音分享链接，在本地下载无水印内容并提取文案或转写结果。"
   }
 }

@@ -1,52 +1,52 @@
-# Troubleshooting
+# 故障排查
 
-## Share page has no SSR data
+## 分享页没有 SSR 数据
 
-**Error:** `分享页未找到内嵌公开数据（_ROUTER_DATA / RENDER_DATA）`
+**错误：** `分享页未找到内嵌公开数据（_ROUTER_DATA / RENDER_DATA）`
 
-**Agent actions:**
+**Agent 处理方式：**
 
-1. Confirm the URL is a Douyin share link (see [URLS.md](URLS.md))
-2. Ask user to copy the **App share short link** (`v.douyin.com`)
-3. Retry `capture.py info URL --json`
+1. 确认输入的是抖音分享链接（见 [URLS.md](URLS.md)）
+2. 请用户重新复制 **App 分享短链**（`v.douyin.com`）
+3. 再次运行 `capture.py info URL --json`
 
-## Link not found in input
+## 输入中没有找到链接
 
-**Error:** `未在输入中找到抖音链接`
+**错误：** `未在输入中找到抖音链接`
 
-Pass the full share text including the `https://` URL, or only the URL string.
+请传入完整分享文案（包含 `https://` 链接），或者只传链接本身。
 
-## FFmpeg missing
+## 缺少 FFmpeg
 
-**Error:** `未找到 ffmpeg`
+**错误：** `未找到 ffmpeg`
 
-Video `extract` without `--skip-transcribe` requires FFmpeg.
+视频执行 `extract` 且未指定 `--skip-transcribe` 时，必须安装 FFmpeg。
 
 - macOS: `brew install ffmpeg`
 - Ubuntu: `sudo apt install ffmpeg`
 
-Or use `--skip-transcribe` to download only.
+如果只下载、不转写，可以改用 `--skip-transcribe`。
 
-## Whisper slow or warnings
+## Whisper 很慢或出现警告
 
-- CPU + `small` model: several minutes for long videos is normal
-- `float16 → float32` warning on CPU can be ignored
-- Suggest `--model tiny` or `--model base` for speed
+- CPU + `small` 模型处理长视频时，几分钟是正常现象
+- CPU 上出现 `float16 → float32` 警告通常可以忽略
+- 如果更关注速度，建议改用 `--model tiny` 或 `--model base`
 
-## Image note: no text in images
+## 图文内容里嵌在图片里的文字提不出来
 
-The skill uses `desc` caption only. Text rendered inside images is **not** OCR'd. Tell the user this limitation.
+当前 skill 只使用 `desc` 配文，不做 OCR，所以图片里直接写上的文字不会被识别。需要明确告诉用户这是当前限制。
 
-## doctor ok but extract fails
+## doctor 正常，但 extract 失败
 
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| Video extract fails after download | FFmpeg missing | Install ffmpeg |
-| Transcribe fails | faster-whisper not installed | `pip install -r requirements.txt` |
-| Download 403 | CDN header issue | Retry; use fresh share link |
+| 现象 | 原因 | 修复方式 |
+|------|------|----------|
+| 视频下载后处理失败 | 缺少 FFmpeg | 安装 ffmpeg |
+| 转写失败 | 未安装 faster-whisper | `pip install -r requirements.txt` |
+| 下载返回 403 | CDN Header 问题 | 重试，或换一条新的分享链接 |
 
-## Agent must not
+## Agent 禁止事项
 
-- Invent CDN URLs from page inspection
-- Skip `capture.py` and call `requests` on Douyin directly
-- Store output in user workspace without permission (use `~/Downloads/douyin-capture` by default)
+- 不要通过手工解析页面来伪造 CDN 地址
+- 不要绕过 `capture.py`，直接自己对 Douyin 页面发 `requests`
+- 未经允许，不要把输出写进用户当前工作区；默认使用 `~/Downloads/douyin-capture`

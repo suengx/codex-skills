@@ -1,20 +1,20 @@
-# Installation
+# 安装说明
 
-## Copy the skill
+## 复制技能目录
 
-Copy the entire `douyin-content-capture/` directory (must contain `SKILL.md`) into one of these locations:
+将完整的 `douyin-content-capture/` 目录复制到下列任一位置，目录中必须包含 `SKILL.md`：
 
-| Scope | Path |
-|-------|------|
-| User (generic) | `~/.agents/skills/douyin-content-capture/` |
+| 范围 | 路径 |
+|------|------|
+| 通用用户目录 | `~/.agents/skills/douyin-content-capture/` |
 | Claude Code | `~/.claude/skills/douyin-content-capture/` |
 | Cursor | `~/.cursor/skills/douyin-content-capture/` |
 | Codex | `~/.codex/skills/douyin-content-capture/` |
-| Project | `.claude/skills/`, `.cursor/skills/`, or `.github/skills/` |
+| 项目级目录 | `.claude/skills/`、`.cursor/skills/` 或 `.github/skills/` |
 
-The folder name must match the skill `name`: `douyin-content-capture`.
+目录名必须与 skill 的 `name` 一致，也就是 `douyin-content-capture`。
 
-## Python dependencies
+## Python 依赖
 
 ```bash
 cd <skill-root>/scripts
@@ -23,16 +23,16 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 ```
 
-This installs the bundled local package from `../../../python-package`.
+这会安装同一插件目录内打包好的本地 Python 包：`../../../python-package`。
 
-## System dependencies
+## 系统依赖
 
-| Tool | Required for | Install |
-|------|--------------|---------|
-| Python 3.10+ | All commands | System package manager |
-| FFmpeg | Video transcription (`extract` without `--skip-transcribe`) | `brew install ffmpeg` / `sudo apt install ffmpeg` |
+| 工具 | 用途 | 安装方式 |
+|------|------|----------|
+| Python 3.10+ | 所有命令 | 系统包管理器 |
+| FFmpeg | 视频转写（`extract` 且未指定 `--skip-transcribe`） | `brew install ffmpeg` / `sudo apt install ffmpeg` |
 
-## Verify
+## 验证
 
 ```bash
 cd <skill-root>/scripts
@@ -40,9 +40,9 @@ source .venv/bin/activate
 python capture.py doctor --json
 ```
 
-- `info` works when `ok: true` (Python + requests)
-- Full video `extract` also needs `ffmpeg` and `faster-whisper` with no errors in `errors[]`
+- `ok: true` 代表 `info` 已可使用（Python + requests 就够）
+- 若要完整视频转写，`errors[]` 中不应再出现 `ffmpeg` 与 `faster-whisper` 缺失项
 
-## Agent note
+## Agent 备注
 
-Use the absolute path to `<skill-root>/scripts` when running `capture.py`. Do not assume the skill lives inside the user's current project directory.
+运行 `capture.py` 时请使用 `<skill-root>/scripts` 的绝对路径，不要假设 skill 位于用户当前项目目录中。

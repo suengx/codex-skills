@@ -1,7 +1,7 @@
 interface:
-  display_name: "Douyin Content Capture"
-  short_description: "Parse Douyin links and extract content locally."
-  default_prompt: "Use $douyin-content-capture to parse a Douyin share link, download clean media, and extract transcript text locally."
+  display_name: "抖音内容抓取"
+  short_description: "解析抖音分享链接并在本地提取内容。"
+  default_prompt: "使用 $douyin-content-capture 解析抖音分享链接，在本地下载无水印内容并提取文案或转写结果。"
 
 policy:
   allow_implicit_invocation: true
