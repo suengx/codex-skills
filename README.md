@@ -11,25 +11,20 @@ Cross-platform agent capabilities packaged as installable tools plus Codex marke
 
 ## Install the CLI
 
-With `pipx`:
+Verified remote install for the full transcript-capable build:
 
 ```bash
-pipx install "git+https://github.com/suengx/codex-skills.git#subdirectory=plugins/douyin-content-capture/python-package[transcribe]"
-```
-
-With `uv`:
-
-```bash
-uv tool install "git+https://github.com/suengx/codex-skills.git#subdirectory=plugins/douyin-content-capture/python-package[transcribe]"
-```
-
-Then run:
-
-```bash
+python -m pip install "douyin-capture[transcribe] @ git+https://github.com/suengx/codex-skills.git@v1.0.0#subdirectory=plugins/douyin-content-capture/python-package"
 douyin-capture doctor --json
 ```
 
-Install without `[transcribe]` when you only need metadata resolution and download helpers.
+For metadata-only usage, omit `[transcribe]`:
+
+```bash
+python -m pip install "douyin-capture @ git+https://github.com/suengx/codex-skills.git@v1.0.0#subdirectory=plugins/douyin-content-capture/python-package"
+```
+
+Tools such as `pipx` or `uv tool` can generally reuse the same PEP 508 direct URL spec.
 
 ## Install the Codex marketplace
 
