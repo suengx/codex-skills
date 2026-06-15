@@ -1,0 +1,20 @@
+{
+  "name": "suengx-skills",
+  "interface": {
+    "displayName": "suengx Skills"
+  },
+  "plugins": [
+    {
+      "name": "douyin-content-capture",
+      "source": {
+        "source": "local",
+        "path": "./plugins/douyin-content-capture"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

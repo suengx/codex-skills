@@ -1,0 +1,7 @@
+interface:
+  display_name: "Douyin Content Capture"
+  short_description: "Parse Douyin links and extract content locally."
+  default_prompt: "Use $douyin-content-capture to parse a Douyin share link, download clean media, and extract transcript text locally."
+
+policy:
+  allow_implicit_invocation: true

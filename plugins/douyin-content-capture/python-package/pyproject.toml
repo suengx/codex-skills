@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "douyin-capture"
+version = "1.0.0"
+description = "Parse Douyin share links, download clean media, and extract transcripts locally."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "suengx" }
+]
+dependencies = [
+  "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+transcribe = [
+  "faster-whisper>=1.0.3",
+  "zhconv>=1.4.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/suengx/codex-skills"
+Repository = "https://github.com/suengx/codex-skills"
+
+[project.scripts]
+douyin-capture = "douyin_capture.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
