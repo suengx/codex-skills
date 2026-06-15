@@ -32,9 +32,43 @@ def check_ffmpeg() -> dict:
     return {"ok": path is not None, "path": path}
 
 
+def check_executable(name: str) -> dict:
+    path = shutil.which(name)
+    result = {"ok": path is not None, "path": path, "version": None}
+    if not path:
+        return result
+    try:
+        proc = subprocess.run(
+            [path, "--version"],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=10,
+        )
+    except OSError:
+        return result
+    result["version"] = (proc.stdout or proc.stderr).strip().splitlines()[0]
+    return result
+
+
 def check_package(name: str) -> dict:
     spec = importlib.util.find_spec(name)
     return {"ok": spec is not None, "installed": spec is not None}
+
+
+def check_av() -> dict:
+    spec = importlib.util.find_spec("av")
+    result = {"ok": False, "installed": spec is not None, "has_audio": False}
+    if not spec:
+        return result
+    try:
+        import av
+    except Exception:
+        return result
+    result["has_audio"] = hasattr(av, "audio")
+    result["ok"] = result["has_audio"]
+    result["version"] = getattr(av, "__version__", None)
+    return result
 
 
 def discover_python_interpreters() -> list[dict]:
@@ -76,10 +110,12 @@ def run_doctor() -> dict:
     python = check_python()
     interpreters = discover_python_interpreters()
     ffmpeg = check_ffmpeg()
+    yt_dlp = check_executable("yt-dlp")
     packages = {
         "requests": check_package("requests"),
         "faster_whisper": check_package("faster_whisper"),
         "zhconv": check_package("zhconv"),
+        "av": check_av(),
     }
 
     errors: list[str] = []
@@ -87,12 +123,16 @@ def run_doctor() -> dict:
         errors.append("需要 Python 3.10 或更高版本")
     if not packages["requests"]["ok"]:
         errors.append("缺少 requests：请安装 douyin-capture 包依赖")
+    if not yt_dlp["ok"]:
+        errors.append("缺少 yt-dlp（直连下载被 CDN 拒绝时需要）：brew install yt-dlp")
     if not ffmpeg["ok"]:
         errors.append("缺少 ffmpeg（视频转写需要）：brew install ffmpeg 或 apt install ffmpeg")
     if not packages["zhconv"]["ok"]:
         errors.append("缺少 zhconv：请安装 douyin-capture 包依赖")
     if not packages["faster_whisper"]["ok"]:
         errors.append("缺少 faster-whisper：请安装 douyin-capture 包依赖")
+    if packages["av"]["installed"] and not packages["av"]["ok"]:
+        errors.append("PyAV 版本不兼容：请重新安装 douyin-capture[transcribe] 以使用 av<17")
 
     scripts_dir = Path(__file__).resolve().parent
     ok = python["ok"] and packages["requests"]["ok"]
@@ -102,6 +142,7 @@ def run_doctor() -> dict:
         "info 命令仅需 requests",
         "extract 视频转写需要 ffmpeg 与 faster-whisper",
         "extract 图文仅需 requests",
+        "视频直连下载失败时会自动 fallback 到 yt-dlp",
     ]
     if not python["ok"] and recommended_python:
         notes.append(
@@ -114,6 +155,7 @@ def run_doctor() -> dict:
         "interpreters": interpreters,
         "recommended_python": recommended_python,
         "ffmpeg": ffmpeg,
+        "yt_dlp": yt_dlp,
         "packages": packages,
         "scripts_dir": str(scripts_dir),
         "errors": errors,

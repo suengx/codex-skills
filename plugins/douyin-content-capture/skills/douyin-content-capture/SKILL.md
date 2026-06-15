@@ -4,9 +4,6 @@ description: >
   解析抖音分享链接，下载无水印视频或图文内容，并通过 faster-whisper
   在本地完成语音转写。用户给出 Douyin URL、v.douyin.com 短链，
   或明确要求提取文案、字幕、无水印下载、抖音分享链时使用。
-metadata:
-  version: "1.0.0"
-  compatibility: "Requires Python 3.10+, FFmpeg (video transcription), network. No login cookies."
 ---
 
 # 抖音内容抓取
@@ -16,7 +13,7 @@ metadata:
 ## Agent rules
 
 1. **Never parse Douyin pages yourself.** Do not fetch CDN URLs or parse `_ROUTER_DATA` manually. Always run `scripts/capture.py`.
-2. **Run `doctor` when the environment is unknown** before `extract`. Guide install per [INSTALL.md](references/INSTALL.md) if dependencies are missing.
+2. **Run `doctor` when the environment is unknown** before `extract`. Guide install per [INSTALL.md](references/INSTALL.md) if dependencies are missing. Video downloads fall back to `yt-dlp` when Douyin CDN rejects direct requests.
 3. **Use `--json` and read stdout JSON only.** Do not paste raw HTML or CDN URLs to the user unless they explicitly ask for the download link.
 4. **Default output directory:** `~/Downloads/douyin-capture` (do not write into the user's project workspace unless they ask).
 5. **Progress handling:** surface CLI stderr progress lines as-is. They now use percentage format like `10%`, `35%`, `70%`, `100%`.
@@ -58,6 +55,8 @@ python -m pip install -r requirements.txt
 
 # Check environment
 python capture.py doctor --json
+
+# Full extract self-bootstraps `scripts/.venv` when transcription deps are missing.
 
 # Metadata only
 python capture.py info "https://v.douyin.com/xxxxx/" --json

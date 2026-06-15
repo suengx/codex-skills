@@ -18,6 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 transcribe = [
+  "av<17",
   "faster-whisper>=1.0.3",
   "zhconv>=1.4.3",
 ]

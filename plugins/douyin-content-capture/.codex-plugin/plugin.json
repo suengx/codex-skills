@@ -1,10 +1,15 @@
 {
   "name": "douyin-content-capture",
   "version": "1.0.0",
-  "description": "面向 Codex 的抖音内容抓取插件适配层。",
+  "description": "面向 Codex 的抖音内容抓取插件，支持抖音分享链接解析、无水印下载与本地转写。",
   "author": {
-    "name": "suengx"
+    "name": "suengx",
+    "url": "https://github.com/suengx"
   },
+  "homepage": "https://github.com/suengx/codex-plugin-douyin-content-capture",
+  "repository": "https://github.com/suengx/codex-plugin-douyin-content-capture",
+  "license": "MIT",
+  "keywords": ["douyin", "抖音", "capture", "transcription", "video"],
   "skills": "./skills/",
   "interface": {
     "displayName": "抖音内容抓取",
@@ -13,6 +18,10 @@
     "developerName": "suengx",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "使用抖音内容抓取插件解析抖音分享链接，在本地下载无水印内容并提取文案或转写结果。"
+    "defaultPrompt": [
+      "解析这个抖音分享链接，下载无水印内容并提取文案。",
+      "帮我抓取这个抖音视频，并输出 transcript 预览与产物入口。",
+      "识别这段抖音分享文案里的链接，直接完成下载和转写。"
+    ]
   }
 }

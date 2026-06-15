@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from .downloader import download_file
+from .downloader import download_file, download_video_with_ytdlp
 from .report import render_capture_report
 from .resolver import DouyinContentMeta, resolve_douyin_share
 from .utils import DEFAULT_OUTPUT_ROOT, build_output_dir, build_transcript_preview
@@ -168,7 +168,18 @@ def _process_video(meta: DouyinContentMeta, out_dir: Path, cfg: Settings) -> Non
 
     if not video_path.exists():
         _log_progress(35, "开始下载无水印视频")
-        download_file(meta.download_url, video_path)
+        try:
+            download_file(meta.download_url, video_path)
+        except Exception as direct_error:
+            if video_path.exists():
+                video_path.unlink()
+            _log_progress(45, "直连下载失败，改用 yt-dlp 下载视频")
+            try:
+                download_video_with_ytdlp(meta.source_url, video_path)
+            except Exception as fallback_error:
+                raise RuntimeError(
+                    f"视频下载失败。直连错误: {direct_error}; yt-dlp 错误: {fallback_error}"
+                ) from fallback_error
 
     if cfg.skip_transcribe:
         _log_progress(90, "已按要求跳过转写，写入结果文件")

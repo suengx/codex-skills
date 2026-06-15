@@ -30,6 +30,7 @@ python -m pip install -r requirements.txt
 | 工具 | 用途 | 安装方式 |
 |------|------|----------|
 | Python 3.10+ | 所有命令 | 系统包管理器 |
+| yt-dlp | 直连视频下载被 Douyin CDN 拒绝时的 fallback | `brew install yt-dlp` / `pipx install yt-dlp` |
 | FFmpeg | 视频转写（`extract` 且未指定 `--skip-transcribe`） | `brew install ffmpeg` / `sudo apt install ffmpeg` |
 
 ## 验证
@@ -42,6 +43,7 @@ python capture.py doctor --json
 
 - `ok: true` 代表 `info` 已可使用（Python + requests 就够）
 - 若要完整视频转写，`errors[]` 中不应再出现 `ffmpeg` 与 `faster-whisper` 缺失项
+- 完整 `extract` 会在缺少转写依赖时自动创建 `scripts/.venv` 并安装 `requirements.txt`
 
 ## Agent 备注
 
