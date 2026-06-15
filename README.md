@@ -36,13 +36,16 @@ Codex 的最佳实践是：
 
 - 源码统一放在本仓库
 - 每个技能单独一个分发仓库
-- 用户按需 `marketplace add` 单个技能仓库
+- 用户先 `marketplace add` 单个技能仓库，再在 Codex 插件/市场界面按需安装或启用
 
 这样可以避免“加一个市场就把整仓技能都暴露出来”的粗粒度安装体验。
 
 当前 `douyin-content-capture` 的独立分发仓库是：
 
 - `suengx/codex-plugin-douyin-content-capture`
+
+该分发仓库的 marketplace 策略应保持为 `policy.installation: "AVAILABLE"`，
+表示“添加市场后可选安装”，不要改回 `INSTALLED_BY_DEFAULT`。
 
 ## 设计原则
 
