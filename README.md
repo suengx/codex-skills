@@ -58,16 +58,13 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 用 init-matt-engineering-discipline 初始化当前仓库。
 ```
 
-当前 `douyin-content-capture` 的独立分发仓库是：
+当前独立分发仓库：
 
 - `suengx/codex-plugin-douyin-content-capture`
-
-该分发仓库的 marketplace 策略应保持为 `policy.installation: "AVAILABLE"`，
-表示“添加市场后可选安装”，不要改回 `INSTALLED_BY_DEFAULT`。
-
-建议后续为 `init-matt-engineering-discipline` 也建立独立分发仓库：
-
 - `suengx/codex-plugin-init-matt-engineering-discipline`
+
+这些分发仓库的 marketplace 策略应保持为 `policy.installation: "AVAILABLE"`，
+表示“添加市场后可选安装”，不要改回 `INSTALLED_BY_DEFAULT`。
 
 这样 Codex marketplace 安装入口可以保持单插件粒度；本仓库继续作为源码、测试和同步上游。
 
