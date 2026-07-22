@@ -1,0 +1,30 @@
+name: Feature
+description: 提出一个新能力或改进
+title: "[Feature] "
+labels: ["needs-triage", "type:feature"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题 / 机会
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收标准
+      value: |
+        - [ ]
+        - [ ]
+  - type: textarea
+    id: non-goals
+    attributes:
+      label: 非目标
+  - type: textarea
+    id: notes
+    attributes:
+      label: 备注 / 相关上下文

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Worktree Agent Coordination"
+  short_description: "多 worktree / 多 agent 执行协调"
+  default_prompt: "Use $worktree-agent-coordination to check this worktree before starting, syncing main, finishing, or integrating agent work."

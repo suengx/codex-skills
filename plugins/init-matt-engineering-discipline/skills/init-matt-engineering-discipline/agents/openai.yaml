@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Scaffold"
+  short_description: "初始化仓库工程脚手架"
+  default_prompt: "Use $init-matt-engineering-discipline to initialize this repo with Matt skills, Chinese-first agent protocol, worktree coordination, and GitHub governance."

@@ -14,6 +14,10 @@
   - `python-package/`：可安装的通用 CLI 包
   - `skills/douyin-content-capture/`：Codex skill 适配层
   - `.codex-plugin/plugin.json`：Codex plugin 清单
+- `plugins/init-matt-engineering-discipline/`
+  - `skills/init-matt-engineering-discipline/`：仓库初始化脚手架 skill
+  - `.codex-plugin/plugin.json`：Codex plugin 清单
+  - 用途：安装 Matt Pocock skills，生成中文优先的 agent 协议、GitHub Issues/PR/CI/review/release 治理资产，并内置 worktree 协作纪律
 
 ## 安装 CLI
 
@@ -40,6 +44,20 @@ Codex 的最佳实践是：
 
 这样可以避免“加一个市场就把整仓技能都暴露出来”的粗粒度安装体验。
 
+对于纯 skill，也可以让 Codex 从本仓库的具体路径安装：
+
+```bash
+python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
+  --repo suengx/codex-skills \
+  --path plugins/init-matt-engineering-discipline/skills/init-matt-engineering-discipline
+```
+
+安装后，在下一轮对话中即可说：
+
+```text
+用 init-matt-engineering-discipline 初始化当前仓库。
+```
+
 当前 `douyin-content-capture` 的独立分发仓库是：
 
 - `suengx/codex-plugin-douyin-content-capture`
@@ -47,8 +65,16 @@ Codex 的最佳实践是：
 该分发仓库的 marketplace 策略应保持为 `policy.installation: "AVAILABLE"`，
 表示“添加市场后可选安装”，不要改回 `INSTALLED_BY_DEFAULT`。
 
+建议后续为 `init-matt-engineering-discipline` 也建立独立分发仓库：
+
+- `suengx/codex-plugin-init-matt-engineering-discipline`
+
+这样 Codex marketplace 安装入口可以保持单插件粒度；本仓库继续作为源码、测试和同步上游。
+
 ## 设计原则
 
 - 核心能力先做成稳定 CLI 或 package contract
 - Codex 相关元数据只放在适配层
 - 分发粒度按 plugin 控制，不按源码仓库控制
+- 普通 skill 的 `SKILL.md` 保持短入口，详细 SOP 放到 `references/`，确定性操作放到 `scripts/`
+- 消费型仓库只安装 runnable skill 到 `.agents/skills/`；只有技能创作仓库才维护 `skills/` 源码

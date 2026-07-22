@@ -23,6 +23,59 @@ jobs:
       - name: Run package tests
         run: pytest plugins/douyin-content-capture/python-package/tests
 
-      - name: Validate JSON manifests
+      - name: Validate plugin manifests
         run: |
-          python -m json.tool plugins/douyin-content-capture/.codex-plugin/plugin.json > /dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          required_interface = {
+              "displayName",
+              "shortDescription",
+              "longDescription",
+              "developerName",
+              "category",
+              "capabilities",
+              "defaultPrompt",
+          }
+
+          manifests = sorted(Path("plugins").glob("*/.codex-plugin/plugin.json"))
+          if not manifests:
+              raise SystemExit("No plugin manifests found")
+
+          for manifest in manifests:
+              data = json.loads(manifest.read_text(encoding="utf-8"))
+              for key in ("name", "version", "description", "author", "interface"):
+                  if key not in data:
+                      raise SystemExit(f"{manifest}: missing {key}")
+              missing = required_interface - set(data["interface"])
+              if missing:
+                  raise SystemExit(f"{manifest}: missing interface fields {sorted(missing)}")
+              if data.get("skills"):
+                  skills_dir = manifest.parents[1] / data["skills"].removeprefix("./")
+                  if not skills_dir.exists():
+                      raise SystemExit(f"{manifest}: skills path does not exist: {skills_dir}")
+          PY
+
+      - name: Validate skill entrypoints
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          skill_files = sorted(Path("plugins").glob("*/skills/*/SKILL.md"))
+          if not skill_files:
+              raise SystemExit("No SKILL.md files found")
+
+          for path in skill_files:
+              text = path.read_text(encoding="utf-8")
+              if not text.startswith("---\n"):
+                  raise SystemExit(f"{path}: missing YAML frontmatter")
+              try:
+                  _, frontmatter, body = text.split("---", 2)
+              except ValueError as exc:
+                  raise SystemExit(f"{path}: malformed frontmatter") from exc
+              if "name:" not in frontmatter or "description:" not in frontmatter:
+                  raise SystemExit(f"{path}: frontmatter must include name and description")
+              if not body.strip():
+                  raise SystemExit(f"{path}: empty skill body")
+          PY
