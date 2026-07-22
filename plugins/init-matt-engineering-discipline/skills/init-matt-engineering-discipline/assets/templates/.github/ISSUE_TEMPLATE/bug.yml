@@ -1,0 +1,43 @@
+name: Bug
+description: 报告一个可复现的问题
+title: "[Bug] "
+labels: ["needs-triage", "type:bug"]
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景
+      description: 发生了什么，为什么这是问题？
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 给出最小复现步骤、输入、账号状态或环境。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 日志 / 截图 / 证据
+  - type: textarea
+    id: validation
+    attributes:
+      label: 修复验收标准
+      value: |
+        - [ ] 有最小复现
+        - [ ] 有回归测试
+        - [ ] 修复不扩大范围

@@ -1,0 +1,47 @@
+name: Spec
+description: 固化一个已经基本讨论清楚的需求规格
+title: "[Spec] "
+labels: ["needs-triage", "type:spec"]
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景
+    validations:
+      required: true
+  - type: textarea
+    id: goals
+    attributes:
+      label: 目标
+    validations:
+      required: true
+  - type: textarea
+    id: non-goals
+    attributes:
+      label: 非目标
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收标准
+      value: |
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: 测试要求
+  - type: textarea
+    id: context
+    attributes:
+      label: 相关上下文
+      description: 链接 ADR、CONTEXT 术语、相关 issues 或 PR。
+  - type: textarea
+    id: assignment
+    attributes:
+      label: 分工判断
+      value: |
+        - 建议执行者：
+        - 是否适合 agent：
+        - 阻塞项：

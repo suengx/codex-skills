@@ -1,0 +1,27 @@
+{
+  "name": "init-matt-engineering-discipline",
+  "version": "0.1.0",
+  "description": "Repository initialization scaffold for Matt Pocock skills, Chinese-first agent protocol, worktree coordination, and GitHub governance.",
+  "author": {
+    "name": "suengx",
+    "url": "https://github.com/suengx"
+  },
+  "homepage": "https://github.com/suengx/codex-skills/tree/main/plugins/init-matt-engineering-discipline",
+  "repository": "https://github.com/suengx/codex-skills",
+  "license": "MIT",
+  "keywords": ["codex", "skills", "repository-scaffold", "github-governance", "worktree"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Repository Scaffold",
+    "shortDescription": "初始化 Matt skills 仓库工程脚手架。",
+    "longDescription": "为新仓库安装 Matt Pocock skills，生成中文优先的 AGENTS/CONTEXT/docs/.github 治理资产，配置 GitHub Issues/PR/CI/review/release 流程，并内置 worktree-agent-coordination 协作纪律。",
+    "developerName": "suengx",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "初始化当前仓库的 Matt skills 工程脚手架。",
+      "用 GitHub 标准流程配置这个新 repo。",
+      "给这个项目安装中文优先和 worktree 协作纪律。"
+    ]
+  }
+}

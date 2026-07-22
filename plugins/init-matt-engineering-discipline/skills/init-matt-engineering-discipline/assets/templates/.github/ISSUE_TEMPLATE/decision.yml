@@ -1,0 +1,28 @@
+name: Decision
+description: 记录一个需要先决策的问题
+title: "[Decision] "
+labels: ["needs-triage", "type:decision"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: 要回答的问题
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: 可选方案
+      value: |
+        1.
+        2.
+        3.
+  - type: textarea
+    id: constraints
+    attributes:
+      label: 约束 / 判断标准
+  - type: textarea
+    id: decision
+    attributes:
+      label: 最终决策
+      description: 决策后补充；必要时同步 ADR。

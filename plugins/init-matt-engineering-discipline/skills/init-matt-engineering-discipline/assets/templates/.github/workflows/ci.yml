@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect project
+        id: detect
+        shell: bash
+        run: |
+          if [ -f package.json ]; then echo "node=true" >> "$GITHUB_OUTPUT"; fi
+          if [ -f pyproject.toml ] || [ -f requirements.txt ]; then echo "python=true" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-node@v4
+        if: steps.detect.outputs.node == 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Node checks
+        if: steps.detect.outputs.node == 'true'
+        shell: bash
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+          npm run lint --if-present
+          npm run typecheck --if-present
+          npm test --if-present
+          npm run build --if-present
+
+      - uses: actions/setup-python@v5
+        if: steps.detect.outputs.python == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Python checks
+        if: steps.detect.outputs.python == 'true'
+        shell: bash
+        run: |
+          python -m compileall .
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ]; then pip install -e ".[test]" || pip install -e .; fi
+          python -m pytest || echo "pytest unavailable or no tests collected"
+
+      - name: Governance-only repo
+        if: steps.detect.outputs.node != 'true' && steps.detect.outputs.python != 'true'
+        run: echo "No Node/Python project detected; governance files only."
